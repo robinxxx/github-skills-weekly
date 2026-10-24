@@ -1,0 +1,34 @@
+name: Update Skills Weekly Leaderboard
+
+on:
+  schedule:
+    - cron: "0 6 * * 1" # UTC 周一早上 6 点 = 北京时间周一 14:00
+  workflow_dispatch: # 支持手动点击运行
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run fetch script
+        env:
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+        run: python scripts/fetch_skills.py
+
+      - name: Commit & Push changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add README.md
+          git diff --staged --quiet || git commit -m "[Bot] update weekly skill star board"
+          git push

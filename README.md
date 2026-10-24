@@ -10,14 +10,14 @@
 <!-- START_SKILL_TABLE -->
 | Rank | Repo | 本周⭐ | 总⭐ | Description |
 | ---- | ---- | ----- | ---- | ----------- |
-| 1 | [mattpocock/skills](https://github.com/mattpocock/skills) | +0 | 0 | 仓库不存在/无权限 |
-| 2 | [emilkowalski/skills](https://github.com/emilkowalski/skills) | +0 | 0 | 仓库不存在/无权限 |
-| 3 | [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) | +0 | 0 | 仓库不存在/无权限 |
-| 4 | [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | +0 | 0 | 仓库不存在/无权限 |
-| 5 | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | +0 | 0 | 仓库不存在/无权限 |
-| 6 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | +0 | 0 | 仓库不存在/无权限 |
-| 7 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | +0 | 0 | 仓库不存在/无权限 |
-| 8 | [blader/humanizer](https://github.com/blader/humanizer) | +0 | 0 | 仓库不存在/无权限 |
+| 1 | [mattpocock/skills](https://github.com/mattpocock/skills) | +0 | 301872 | Skills for Real Engineers. Straight from my .agents directory. |
+| 2 | [emilkowalski/skills](https://github.com/emilkowalski/skills) | +0 | 49108 | Skills for Designers and Engineers. |
+| 3 | [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) | +0 | 22780 | Give your agent CAD superpowers. |
+| 4 | [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | +0 | 19898 | Universal SEO skill for Claude Code. 26 sub-skills + 19 sub-agents covering technical SEO, E-E-A-T, schema, GEO/AEO, agent readiness (Lighthouse Agentic Browsing, WebMCP, llms.txt), backlinks, local SEO, e-commerce, international SEO, Google APIs, and PDF/Excel reporting. 9 optional extensions for live SEO data. |
+| 5 | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | +0 | 60395 | Editorial diagram design for Claude Code, Codex, GitHub Copilot, Cursor, Factory Droid, Qoder, and Pi. 45 diagram types. Self-contained HTML + SVG. No shadows. No Mermaid slop. |
+| 6 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | +0 | 114651 | 🪨 why use many token when few token do trick. Viral skill + proxy for coding agents that cuts 65% of tokens by talking like a caveman. |
+| 7 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | +0 | 88335 | Turn any idea, plan, or codebase into a beautiful interactive diagram. An agent skill for Claude Code, Codex, and more. |
+| 8 | [blader/humanizer](https://github.com/blader/humanizer) | +0 | 60022 | Agent skill that removes signs of AI-generated writing from text |
 
 <!-- END_SKILL_TABLE -->
 

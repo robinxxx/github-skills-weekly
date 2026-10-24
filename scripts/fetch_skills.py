@@ -1,19 +1,26 @@
 # -*- coding: utf-8 -*-
 """github-skills-weekly 周榜抓取脚本。
 
-按近 7 天新增 Star 排序，自动更新 README.md 榜单区域。
+按"相邻两次运行的总 Star 增量"排序（快照法）：
+- 当前环境的 GitHub API 不返回 star 事件时间序列（stargazers 列表不可用），
+  故无法实时统计"近 7 天新增 Star"；
+- 改为保存每次运行的总 Star 快照（data/stars.json），
+  本周新增 = 本次总 Star - 上次快照总 Star，首次运行建立基线显示 "-"。
+
 用法: GH_TOKEN=<token> python scripts/fetch_skills.py
 """
 
+import json
 import os
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timezone
 
 import requests
 
 GH_TOKEN = os.getenv("GH_TOKEN")
 HEADERS = {"Authorization": f"Bearer {GH_TOKEN}"} if GH_TOKEN else {}
-ONE_WEEK_AGO = (datetime.utcnow() - timedelta(days=7)).isoformat() + "Z"
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SNAPSHOT_PATH = os.path.join(BASE_DIR, "data", "stars.json")
 
 # ========= 在这里添加/删除要监控的 Skill 仓库 =========
 REPOS = [
@@ -29,95 +36,92 @@ REPOS = [
 # =====================================================
 
 GRAPHQL_QUERY = """
-query($owner: String!, $name: String!, $after: String) {
+query($owner: String!, $name: String!) {
   repository(owner: $owner, name: $name) {
     stargazerCount
     nameWithOwner
     description
-    stargazers(first: 100, after: $after, orderBy: {field: STARRED_AT, direction: DESC}) {
-      edges {
-        starredAt
-      }
-      pageInfo {
-        endCursor
-        hasNextPage
-      }
-    }
   }
 }
 """
 
 
-def get_week_star_gain(repo_full: str):
+def load_snapshot():
+    if os.path.exists(SNAPSHOT_PATH):
+        try:
+            with open(SNAPSHOT_PATH, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except (json.JSONDecodeError, OSError):
+            return {}
+    return {}
+
+
+def save_snapshot(snapshot):
+    os.makedirs(os.path.dirname(SNAPSHOT_PATH), exist_ok=True)
+    with open(SNAPSHOT_PATH, "w", encoding="utf-8") as f:
+        json.dump(snapshot, f, ensure_ascii=False, indent=2)
+
+
+def fetch_repo(repo_full):
     owner, name = repo_full.split("/")
-    gain = 0
-    after = None
-    total_stars = 0
-    desc = "-"
-
-    while True:
-        resp = requests.post(
-            "https://api.github.com/graphql",
-            json={
-                "query": GRAPHQL_QUERY,
-                "variables": {"owner": owner, "name": name, "after": after},
-            },
-            headers=HEADERS,
-            timeout=30,
-        )
-        if resp.status_code == 401:
-            sys.exit("❌ GH_TOKEN 无效或未设置，请检查仓库 Secrets")
-        data = resp.json()
-        repo = data.get("data", {}).get("repository")
-        if repo is None:
-            return {"repo": repo_full, "gain": 0, "total": 0, "desc": "仓库不存在/无权限"}
-
-        total_stars = repo["stargazerCount"]
-        desc = repo["description"] or "-"
-        edges = repo["stargazers"]["edges"]
-        page_info = repo["stargazers"]["pageInfo"]
-
-        # starredAt 按时间降序返回：遇到第一个早于一周的即可停止
-        stop = False
-        for e in edges:
-            if e["starredAt"] >= ONE_WEEK_AGO:
-                gain += 1
-            else:
-                stop = True
-                break
-
-        if stop or not page_info["hasNextPage"]:
-            break
-        after = page_info["endCursor"]
-
+    resp = requests.post(
+        "https://api.github.com/graphql",
+        json={"query": GRAPHQL_QUERY, "variables": {"owner": owner, "name": name}},
+        headers=HEADERS,
+        timeout=30,
+    )
+    if resp.status_code == 401:
+        sys.exit("❌ GH_TOKEN 无效或未设置，请检查仓库 Secrets")
+    data = resp.json()
+    repo = data.get("data", {}).get("repository")
+    if repo is None:
+        return {"repo": repo_full, "total": 0, "desc": "仓库不存在/无权限"}
     return {
         "repo": repo["nameWithOwner"],
-        "gain": gain,
-        "total": total_stars,
-        "desc": desc,
+        "total": repo["stargazerCount"],
+        "desc": repo["description"] or "-",
     }
 
 
 def main():
+    snapshot = load_snapshot()
+    now = datetime.now(timezone.utc).isoformat()
+
     result_list = []
+    new_snapshot = {}
     for repo in REPOS:
         print(f"🔍 fetching {repo} ...")
-        result_list.append(get_week_star_gain(repo))
+        item = fetch_repo(repo)
+        prev = snapshot.get(item["repo"], {}).get("total")
+        if prev is None:
+            gain = None  # 首次运行，建立基线
+        else:
+            gain = max(0, item["total"] - prev)
+        new_snapshot[item["repo"]] = {"total": item["total"], "ts": now}
+        item["gain"] = gain
+        result_list.append(item)
 
-    # 按本周新增 star 降序
-    result_list.sort(key=lambda x: x["gain"], reverse=True)
+    save_snapshot(new_snapshot)
+
+    # 排序：有增量的优先按增量降序，其余按总 star 降序
+    result_list.sort(
+        key=lambda x: (x["gain"] if x["gain"] is not None else -1, x["total"]),
+        reverse=True,
+    )
 
     md_table = "| Rank | Repo | 本周⭐ | 总⭐ | Description |\n"
     md_table += "| ---- | ---- | ----- | ---- | ----------- |\n"
     for idx, row in enumerate(result_list, start=1):
         link = f"https://github.com/{row['repo']}"
+        gain_str = f"+{row['gain']}" if row["gain"] is not None else "-"
         safe_desc = row["desc"].replace("|", " ")
         md_table += (
-            f"| {idx} | [{row['repo']}]({link}) | +{row['gain']} "
+            f"| {idx} | [{row['repo']}]({link}) | {gain_str} "
             f"| {row['total']} | {safe_desc} |\n"
         )
 
-    with open("README.md", "r", encoding="utf-8") as f:
+    readme_path = os.path.join(BASE_DIR, "README.md")
+    with open(readme_path, "r", encoding="utf-8") as f:
         readme_content = f.read()
     start_tag = "<!-- START_SKILL_TABLE -->"
     end_tag = "<!-- END_SKILL_TABLE -->"
@@ -128,7 +132,7 @@ def main():
     right_part = readme_content.split(end_tag)[1]
     new_readme = f"{left_part}{start_tag}\n{md_table}\n{end_tag}{right_part}"
 
-    with open("README.md", "w", encoding="utf-8") as f:
+    with open(readme_path, "w", encoding="utf-8") as f:
         f.write(new_readme)
     print("✅ README 榜单更新完成！")
 

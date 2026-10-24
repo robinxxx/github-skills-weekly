@@ -34,7 +34,7 @@ query($owner: String!, $name: String!, $after: String) {
     stargazerCount
     nameWithOwner
     description
-    stargazers(first: 100, after: $after) {
+    stargazers(first: 100, after: $after, orderBy: {field: STARRED_AT, direction: DESC}) {
       edges {
         starredAt
       }

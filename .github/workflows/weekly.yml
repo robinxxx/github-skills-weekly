@@ -22,7 +22,8 @@ jobs:
 
       - name: Run fetch script
         env:
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          # 默认使用仓库内置 GITHUB_TOKEN；若配置了自定义 GH_TOKEN Secret 则优先使用
+          GH_TOKEN: ${{ secrets.GH_TOKEN || secrets.GITHUB_TOKEN }}
         run: python scripts/fetch_skills.py
 
       - name: Commit & Push changes

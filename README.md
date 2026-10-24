@@ -35,9 +35,10 @@ pip install requests
 python scripts/fetch_skills.py
 ```
 
-## 仓库权限配置
+## 权限说明
 
-需要在仓库 Secrets 添加 `GH_TOKEN`，权限勾选 `public_repo`：
+- **默认无需配置任何 Secret**：Workflow 自动使用仓库内置的 `GITHUB_TOKEN`，足够读取公开仓库数据。
+- 可选：如需监控**私有仓库**或提高 API 配额，可配置自定义 `GH_TOKEN` Secret：
 
 ```
 Settings → Secrets and variables → Actions → New repository secret
@@ -45,4 +46,4 @@ Settings → Secrets and variables → Actions → New repository secret
 
 | Name | Secret |
 | ---- | ------ |
-| GH_TOKEN | 你的 GitHub Personal Access Token（勾选 public_repo） |
+| GH_TOKEN | 你的 GitHub Personal Access Token（勾选 repo 权限） |

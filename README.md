@@ -8,7 +8,17 @@
 📡 RSS 订阅（周报更新通知）：https://rsshub.app/nxplace/weekly-skill-leaderboard
 
 <!-- START_SKILL_TABLE -->
-<!-- 榜单会由机器人自动填充在这里 -->
+| Rank | Repo | 本周⭐ | 总⭐ | Description |
+| ---- | ---- | ----- | ---- | ----------- |
+| 1 | [mattpocock/skills](https://github.com/mattpocock/skills) | +0 | 0 | 仓库不存在/无权限 |
+| 2 | [emilkowalski/skills](https://github.com/emilkowalski/skills) | +0 | 0 | 仓库不存在/无权限 |
+| 3 | [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) | +0 | 0 | 仓库不存在/无权限 |
+| 4 | [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | +0 | 0 | 仓库不存在/无权限 |
+| 5 | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | +0 | 0 | 仓库不存在/无权限 |
+| 6 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | +0 | 0 | 仓库不存在/无权限 |
+| 7 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | +0 | 0 | 仓库不存在/无权限 |
+| 8 | [blader/humanizer](https://github.com/blader/humanizer) | +0 | 0 | 仓库不存在/无权限 |
+
 <!-- END_SKILL_TABLE -->
 
 ## 使用说明

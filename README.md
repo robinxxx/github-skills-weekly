@@ -10,14 +10,14 @@
 <!-- START_SKILL_TABLE -->
 | Rank | Repo | 本周⭐ | 总⭐ | Description |
 | ---- | ---- | ----- | ---- | ----------- |
-| 1 | [mattpocock/skills](https://github.com/mattpocock/skills) | - | 301875 | Skills for Real Engineers. Straight from my .agents directory. |
-| 2 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | - | 114651 | 🪨 why use many token when few token do trick. Viral skill + proxy for coding agents that cuts 65% of tokens by talking like a caveman. |
-| 3 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | - | 88337 | Turn any idea, plan, or codebase into a beautiful interactive diagram. An agent skill for Claude Code, Codex, and more. |
-| 4 | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | - | 60396 | Editorial diagram design for Claude Code, Codex, GitHub Copilot, Cursor, Factory Droid, Qoder, and Pi. 45 diagram types. Self-contained HTML + SVG. No shadows. No Mermaid slop. |
-| 5 | [blader/humanizer](https://github.com/blader/humanizer) | - | 60025 | Agent skill that removes signs of AI-generated writing from text |
-| 6 | [emilkowalski/skills](https://github.com/emilkowalski/skills) | - | 49113 | Skills for Designers and Engineers. |
-| 7 | [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) | - | 22783 | Give your agent CAD superpowers. |
-| 8 | [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | - | 19901 | Universal SEO skill for Claude Code. 26 sub-skills + 19 sub-agents covering technical SEO, E-E-A-T, schema, GEO/AEO, agent readiness (Lighthouse Agentic Browsing, WebMCP, llms.txt), backlinks, local SEO, e-commerce, international SEO, Google APIs, and PDF/Excel reporting. 9 optional extensions for live SEO data. |
+| 1 | [tt-a1i/archify](https://github.com/tt-a1i/archify) | +4 | 88341 | Turn any idea, plan, or codebase into a beautiful interactive diagram. An agent skill for Claude Code, Codex, and more. |
+| 2 | [cathrynlavery/diagram-design](https://github.com/cathrynlavery/diagram-design) | +4 | 60400 | Editorial diagram design for Claude Code, Codex, GitHub Copilot, Cursor, Factory Droid, Qoder, and Pi. 45 diagram types. Self-contained HTML + SVG. No shadows. No Mermaid slop. |
+| 3 | [earthtojake/text-to-cad](https://github.com/earthtojake/text-to-cad) | +3 | 22786 | Give your agent CAD superpowers. |
+| 4 | [blader/humanizer](https://github.com/blader/humanizer) | +2 | 60027 | Agent skill that removes signs of AI-generated writing from text |
+| 5 | [emilkowalski/skills](https://github.com/emilkowalski/skills) | +2 | 49115 | Skills for Designers and Engineers. |
+| 6 | [mattpocock/skills](https://github.com/mattpocock/skills) | +1 | 301876 | Skills for Real Engineers. Straight from my .agents directory. |
+| 7 | [JuliusBrussee/caveman](https://github.com/JuliusBrussee/caveman) | +1 | 114652 | 🪨 why use many token when few token do trick. Viral skill + proxy for coding agents that cuts 65% of tokens by talking like a caveman. |
+| 8 | [AgriciDaniel/claude-seo](https://github.com/AgriciDaniel/claude-seo) | +0 | 19901 | Universal SEO skill for Claude Code. 26 sub-skills + 19 sub-agents covering technical SEO, E-E-A-T, schema, GEO/AEO, agent readiness (Lighthouse Agentic Browsing, WebMCP, llms.txt), backlinks, local SEO, e-commerce, international SEO, Google APIs, and PDF/Excel reporting. 9 optional extensions for live SEO data. |
 
 <!-- END_SKILL_TABLE -->
 
